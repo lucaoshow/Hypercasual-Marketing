@@ -37,7 +37,7 @@ namespace Root.Frogger.Player
             float minDotProduct = 1f;
             foreach (Vector2 dir in directions)
             {
-                float dotProduct = -Vector2.Dot(delta.normalized, dir);
+                float dotProduct = Vector2.Dot(delta.normalized, dir);
                 if (dotProduct < minDotProduct)
                 {
                     swipeDir = dir;
@@ -45,7 +45,7 @@ namespace Root.Frogger.Player
                 }
             }
 
-            return swipeDir;
+            return -swipeDir;
         }
     }
 }
