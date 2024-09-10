@@ -1,6 +1,6 @@
 using UnityEngine.SceneManagement;
 
-namespace Root.Utils.Scenes
+namespace Root.General.Utils.Scenes
 {
     public class SceneHelper
     {
