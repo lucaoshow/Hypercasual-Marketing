@@ -59,12 +59,8 @@ def players():
     response = supabase.table('player').select("*").order('name').execute()
     return response.data
 
-if __name__ == "__main__":
-    app.run(debug=True)
-
 @app.route('/players', methods=['POST'])
 def players_insert():
-
     try:
         data = request.get_json()
 
@@ -91,3 +87,6 @@ def players_insert():
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+if __name__ == "__main__":
+    app.run(debug=True)
