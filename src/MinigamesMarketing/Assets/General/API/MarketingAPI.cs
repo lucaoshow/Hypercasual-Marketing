@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -21,10 +20,33 @@ namespace Root.General.API
             }
         }
 
+        public void GetLeaderboard(Leaderboard resultContainer)
+        {
+            StartCoroutine(this.Get<Leaderboard>(API_URL + "/scores", resultContainer, "lines"));
+        }
+
         public void SendPlayerFormData(string name, string email, string interest, int year, bool authorization)
         {
             string auth = authorization ? "true" : "false";
             this.StartCoroutine(this.Post(API_URL + "/players", $"{{\"name\": \"{name}\",\"email\": \"{email}\",\"interest_area\": \"{interest}\", \"graduation_year\": {year}, \"email_authorization\": {auth}}}"));
+        }
+
+        private IEnumerator Get<T>(string url, T resultContainer, string jsonArrayKey) where T : IGetResultContainer<T>
+        {
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+            {
+                yield return webRequest.SendWebRequest();
+
+                string json = webRequest.downloadHandler.text;
+                if (jsonArrayKey != string.Empty)
+                {
+                    resultContainer.AddRange(JsonUtility.FromJson<T>($"{{\"{jsonArrayKey}\":" + json + "}"));
+                }
+                else
+                {
+                    resultContainer.AddRange(JsonUtility.FromJson<T>(json));
+                }
+            }
         }
 
         private IEnumerator Post(string url, string json)
@@ -42,5 +64,6 @@ namespace Root.General.API
                 }
             }
         }
+
     }
 }
