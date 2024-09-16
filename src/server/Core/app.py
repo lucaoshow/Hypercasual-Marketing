@@ -24,7 +24,6 @@ def games():
 
 @app.route('/scores')
 def scores():
-
     today = datetime.now().strftime('%Y-%m-%d')
     response = supabase.from_('score').select('player_id, value').gte('date', today + ' 00:00:00').lte('date', today + ' 23:59:59').order('value', desc=True).execute()
 
@@ -59,12 +58,8 @@ def players():
     response = supabase.table('player').select("*").order('name').execute()
     return response.data
 
-if __name__ == "__main__":
-    app.run(debug=True)
-
 @app.route('/players', methods=['POST'])
 def players_insert():
-
     try:
         data = request.get_json()
 
@@ -87,7 +82,10 @@ def players_insert():
             .execute()
         )
 
-        return jsonify({ "message": "Pontuação inserida com sucesso", "data": response.data}), 200
+        return jsonify({ "message": "Dados do jogador inseridos com sucesso", "data": response.data}), 200
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+if __name__ == "__main__":
+    app.run(debug=True)
