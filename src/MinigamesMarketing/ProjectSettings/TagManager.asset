@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - EnemyProjectile
   - PlayerShot
+  - StaticObjects
+  - ScenarioBeing
   layers:
   - Default
   - TransparentFX
@@ -18,8 +20,8 @@ TagManager:
   - Enemy
   - EnemyMissile
   - PlayerShot
-  - 
-  - 
+  - Scenario
+  - ScenarioBeings
   - 
   - 
   - 
