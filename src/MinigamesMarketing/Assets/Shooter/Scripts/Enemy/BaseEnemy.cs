@@ -1,11 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
-using JetBrains.Annotations;
-using Root.General.Score;
 using Root.Shooter.Score;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Root
@@ -74,14 +68,10 @@ namespace Root
 
             if (health <= 0)
             {
-
-                gm.GetComponent<EnemySpawnerScript>().enemiesInScene.Remove(gameObject);
+                gm.GetComponent<EnemySpawnerScript>().RemoveEnemy(gameObject);
                 Instantiate(explosion, new UnityEngine.Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z), UnityEngine.Quaternion.identity);
                 ShooterScoreManager.Instance.IncrementScore();
                 Destroy(gameObject);
-                
-
-
             }
             else
             {

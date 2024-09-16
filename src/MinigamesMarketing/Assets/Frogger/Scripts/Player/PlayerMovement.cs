@@ -4,6 +4,7 @@ namespace Root.Frogger.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
+        [SerializeField] private Animator animator;
         private Vector2 lastDeltaPos;
 
         void Update()
@@ -19,13 +20,20 @@ namespace Root.Frogger.Player
 
                     case TouchPhase.Ended:
                         Vector2 swipeDir = this.GetSwipeDirection( this.lastDeltaPos );
+                        this.animator.SetInteger("jumpX", (int) swipeDir.x);
+                        this.animator.SetInteger("jumpY", (int) swipeDir.y);
                         this.transform.position += new Vector3( swipeDir.x, swipeDir.y, 0 );
                         this.lastDeltaPos = Vector2.zero;
+                        this.animator.SetBool("jump", true);
                         break;
 
                     default:
                         break;
                 }
+            }
+            else
+            {
+                this.animator.SetBool("jump", false);
             }
 
         }

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Root.Shooter.Score;
 
@@ -32,7 +31,7 @@ namespace Root
             if (health <= 0)
             {
 
-                gm.GetComponent<EnemySpawnerScript>().enemiesInScene.Remove(gameObject);
+                gm.GetComponent<EnemySpawnerScript>().RemoveEnemy(gameObject);
                 GameObject explosionObj = Instantiate(explosion, new UnityEngine.Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z), UnityEngine.Quaternion.identity);
                 yield return new WaitForSeconds(0.1f);
                 Destroy(explosionObj);
