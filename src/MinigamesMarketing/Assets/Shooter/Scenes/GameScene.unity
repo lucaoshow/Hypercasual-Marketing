@@ -665,6 +665,7 @@ MonoBehaviour:
   - {fileID: 7946140227957724407, guid: 629ad0819d07d65489a784b8c5635be6, type: 3}
   - {fileID: 7822545619882345253, guid: 0db065212a3b3e34a864e0b67995544a, type: 3}
   enemiesInScene: []
+  spawning: 0
 --- !u!4 &1613480937
 Transform:
   m_ObjectHideFlags: 0

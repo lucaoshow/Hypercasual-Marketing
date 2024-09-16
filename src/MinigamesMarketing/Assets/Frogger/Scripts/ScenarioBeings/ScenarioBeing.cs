@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Root.Frogger.ScenarioBeings
@@ -16,6 +17,11 @@ namespace Root.Frogger.ScenarioBeings
             this.spriteRenderer.flipX = this.flipDirection;
             this.moveDir = this.flipDirection ? Vector2.right : Vector2.left;
             this.rigidBody.velocity = this.moveDir * moveSpeed;
+        }
+
+        public void Flip()
+        {
+            this.flipDirection = true;
         }
     }
 }
