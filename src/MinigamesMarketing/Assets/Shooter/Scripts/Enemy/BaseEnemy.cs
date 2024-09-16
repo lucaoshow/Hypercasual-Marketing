@@ -76,9 +76,7 @@ namespace Root
             {
 
                 gm.GetComponent<EnemySpawnerScript>().enemiesInScene.Remove(gameObject);
-                GameObject explosionObj = Instantiate(explosion, new UnityEngine.Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z), UnityEngine.Quaternion.identity);
-                yield return new WaitForSeconds(0.1f);
-                Destroy(explosionObj);
+                Instantiate(explosion, new UnityEngine.Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z), UnityEngine.Quaternion.identity);
                 ShooterScoreManager.Instance.IncrementScore();
                 Destroy(gameObject);
                 

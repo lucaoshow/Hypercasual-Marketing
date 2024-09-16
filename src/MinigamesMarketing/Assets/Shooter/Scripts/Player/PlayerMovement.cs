@@ -13,6 +13,11 @@ namespace Root.Shooter.Player
         private Vector3 origin;
         private Vector3 target;
         public GameObject shotPrefab;
+        public GameObject healthBar;
+        public GameObject explosion;
+        public GameObject hitSound;
+        public int health = 3;
+        
 
         void Update()
         {
@@ -50,6 +55,29 @@ namespace Root.Shooter.Player
         {
             yield return new WaitForSeconds(2);
             Destroy(shot);
+        }
+        void OnCollisionEnter2D(Collision2D collision)
+        {
+            if(collision.gameObject.tag == "EnemyProjectile")
+            {
+                health--;
+                Instantiate(hitSound, transform.position, Quaternion.identity);
+                Destroy(collision.gameObject);
+                switch (health){
+                    case 6:
+                        healthBar.GetComponent<Animator>().CrossFade("2hp", 0);
+                        break;
+                    case 3:
+                        healthBar.GetComponent<Animator>().CrossFade("1hp", 0);
+                        break;
+                    case 0:
+                        healthBar.GetComponent<Animator>().CrossFade("0hp", 0);
+                        GameObject explodeObj = Instantiate(explosion, transform.position, Quaternion.identity);
+                        Destroy(gameObject);
+                        break;
+                }
+                
+            }
         }
     }
 }
