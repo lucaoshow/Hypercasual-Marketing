@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
+using Root.General.API;
 
-namespace Root.General.API
+namespace Root.General.Leaderboard
 {
     [Serializable]
-    public class Leaderboard : IGetResultContainer<Leaderboard>
+    public class LeaderboardData : IGetResultContainer<LeaderboardData>
     {
         public List<LeaderboardLine> lines = new List<LeaderboardLine>();
 
-        public void AddRange(Leaderboard leaderboard)
+        public void AddRange(LeaderboardData leaderboard)
         {
             if (leaderboard.lines.Count > 0)
             {

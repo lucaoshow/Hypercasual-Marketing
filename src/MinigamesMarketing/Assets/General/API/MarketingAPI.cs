@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using Root.General.Leaderboard;
 
 namespace Root.General.API
 {
@@ -20,9 +21,9 @@ namespace Root.General.API
             }
         }
 
-        public void GetLeaderboard(Leaderboard resultContainer)
+        public void GetLeaderboard(LeaderboardData resultContainer)
         {
-            StartCoroutine(this.Get<Leaderboard>(API_URL + "/scores", resultContainer, "lines"));
+            StartCoroutine(this.Get<LeaderboardData>(API_URL + "/scores", resultContainer, "lines"));
         }
 
         public void SendPlayerFormData(string name, string email, string interest, int year, bool authorization)
@@ -36,15 +37,21 @@ namespace Root.General.API
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
                 yield return webRequest.SendWebRequest();
-
-                string json = webRequest.downloadHandler.text;
-                if (jsonArrayKey != string.Empty)
+                try
                 {
-                    resultContainer.AddRange(JsonUtility.FromJson<T>($"{{\"{jsonArrayKey}\":" + json + "}"));
+                    string json = webRequest.downloadHandler.text;
+                    if (jsonArrayKey != string.Empty)
+                    {
+                        resultContainer.AddRange(JsonUtility.FromJson<T>($"{{\"{jsonArrayKey}\":" + json + "}"));
+                    }
+                    else
+                    {
+                        resultContainer.AddRange(JsonUtility.FromJson<T>(json));
+                    }
                 }
-                else
+                catch 
                 {
-                    resultContainer.AddRange(JsonUtility.FromJson<T>(json));
+                    Debug.Log("Failed to parse JSON");
                 }
             }
         }
