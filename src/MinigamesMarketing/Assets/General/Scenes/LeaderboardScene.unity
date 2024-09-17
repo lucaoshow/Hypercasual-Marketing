@@ -347,8 +347,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 1774365175}
-  textPrefab: {fileID: 2814979266626195300, guid: 1ef21e1dd6558e4468b9eceead5d543a, type: 3}
-  rowOffset: 135
+  textPrefab: {fileID: 2814979266626195300, guid: b63e30aabb3c25a4fbe27b2b9fb4691e, type: 3}
+  rowOffset: 150
+  nameWidth: 700
 --- !u!4 &1076861850
 Transform:
   m_ObjectHideFlags: 0
@@ -389,7 +390,7 @@ Transform:
   m_GameObject: {fileID: 1774365174}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -990, y: 390, z: 0}
+  m_LocalPosition: {x: -450, y: 910, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

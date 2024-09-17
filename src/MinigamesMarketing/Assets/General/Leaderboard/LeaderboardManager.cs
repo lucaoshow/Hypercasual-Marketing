@@ -9,6 +9,7 @@ namespace Root.General.Leaderboard
         [SerializeField] private Transform parent;
         [SerializeField] private Text textPrefab;
         [SerializeField] private int rowOffset;
+        [SerializeField] private int nameWidth;
         private LeaderboardData leaderboard = new LeaderboardData();
         private bool renderedLeaderboard = false;
 
@@ -28,8 +29,8 @@ namespace Root.General.Leaderboard
 
         private void RenderLeaderboard()
         {
-            Vector3 pos = new Vector3(0, rowOffset, 0);
-            Vector3 nameOffset = new Vector3(400, 0, 0);
+            Vector3 pos = new Vector3(0, -rowOffset, 0);
+            Vector3 nameOffset = new Vector3(this.nameWidth / 2, 0, 0);
             Vector3 pointsOffset = new Vector3(250, 0, 0);
 
             for (int i = 0; i < this.leaderboard.Count(); i++)
