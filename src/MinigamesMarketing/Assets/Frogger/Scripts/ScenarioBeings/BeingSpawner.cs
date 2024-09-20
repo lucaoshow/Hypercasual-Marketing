@@ -12,10 +12,7 @@ namespace Root.Frogger.ScenarioBeings
         void Start()
         {
             this.timer = this.secondsToSpawn;
-            if (!this.beingFacingLeft)
-            {
-                this.being.Flip();
-            }
+            
         }
 
         void Update()
@@ -23,7 +20,11 @@ namespace Root.Frogger.ScenarioBeings
             if (this.timer >= this.secondsToSpawn)
             {
                 this.timer = 0;
-                Instantiate(this.being.gameObject, this.transform.position, Quaternion.identity);
+                ScenarioBeing instance = Instantiate(this.being, this.transform.position, Quaternion.identity);
+                if (!this.beingFacingLeft)
+                {
+                    instance.Flip();
+                }
             }
 
             this.timer += Time.deltaTime;
