@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - EnemyProjectile
+  - PlayerShot
+  - StaticObjects
+  - ScenarioBeing
   layers:
   - Default
   - TransparentFX
@@ -11,12 +16,12 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - EnemyMissile
+  - PlayerShot
+  - Scenario
+  - ScenarioBeings
   - 
   - 
   - 

@@ -1,2 +1,2 @@
 # Hypercasual-Marketing
-Projeto de desenvolvimento de jogo hypercasual para a equipe de marketing do Inteli!
+Projeto de desenvolvimento de jogos hipercasuais para a equipe de marketing do Inteli!
