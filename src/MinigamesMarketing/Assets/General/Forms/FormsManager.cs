@@ -76,6 +76,7 @@ namespace Root.General.Forms
             {
                 return;
             }
+
             MarketingAPI.Instance.SendPlayerFormData(nameInput.text, emailInput.text, interestInput.text, Int32.Parse(yearInput.text), authorized);
         }
 
