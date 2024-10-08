@@ -19,7 +19,7 @@ namespace Root.General.Forms
         [SerializeField]
         private InputField yearInput;
         [SerializeField]
-        private Button authorizationButton;
+        private Button authorizationButton; 
         [SerializeField]
         private Button sendButton;
         [SerializeField]
@@ -48,11 +48,11 @@ namespace Root.General.Forms
             }
             else if (input == this.emailInput && !Regex.IsMatch(input.text, "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$"))
             {
-                this.errors[input] = this.CreateError(input.transform, "*Email inválido");
+                this.errors[input] = this.CreateError(input.transform, "*Email invï¿½lido");
             }
             else if (input == this.yearInput && (input.text.Length != 4 || Int32.Parse(input.text) < this.CURRENT_YEAR))
             {
-                this.errors[input] = this.CreateError(input.transform, "*Ano inválido");
+                this.errors[input] = this.CreateError(input.transform, "*Ano invï¿½lido");
             }
         }
 

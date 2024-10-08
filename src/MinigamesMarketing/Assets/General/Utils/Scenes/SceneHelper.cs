@@ -9,6 +9,11 @@ namespace Root.General.Utils.Scenes
             SceneManager.LoadScene(sceneName, additive ? LoadSceneMode.Additive : LoadSceneMode.Single);
         }
 
+        public static void LoadScene(int sceneIndex, bool additive = false)
+        {
+            SceneManager.LoadScene(sceneIndex, additive ? LoadSceneMode.Additive : LoadSceneMode.Single);
+        }
+
         public static void UnloadScene(string sceneName)
         {
             SceneManager.UnloadSceneAsync(sceneName);

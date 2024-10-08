@@ -6,7 +6,7 @@ namespace Root
 {
     public class ShotgunEnemy : BaseEnemy
     {
-        new public void Update()
+        public override void Update()
         {
             timeSinceLastShot += Time.deltaTime;
             if (timeSinceLastShot >= fireRate)
@@ -18,7 +18,7 @@ namespace Root
             }
         }
 
-        new public IEnumerator TakeHit()
+        public override IEnumerator TakeHit()
         {
             health -= 1;
             canShoot = false;
@@ -31,18 +31,10 @@ namespace Root
             if (health <= 0)
             {
 
+                ShooterScoreManager.Instance.IncrementScore(3);
                 gm.GetComponent<EnemySpawnerScript>().RemoveEnemy(gameObject);
-                GameObject explosionObj = Instantiate(explosion, new UnityEngine.Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z), UnityEngine.Quaternion.identity);
-                yield return new WaitForSeconds(0.1f);
-                Destroy(explosionObj);
-                for (int i = 0; i < 3; i++)
-                {
-                    ShooterScoreManager.Instance.IncrementScore();
-                }
+                Instantiate(explosion, new Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z), Quaternion.identity);
                 Destroy(gameObject);
-
-
-
             }
             else
             {

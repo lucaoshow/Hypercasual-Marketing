@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
+using Root.Shooter.Score;
 
 namespace Root
 {
     public class EnemySpawnerScript : MonoBehaviour
     {
+        [SerializeField] Text pointsText;
         public Vector2 minSpawnPosition = new Vector2(-1.718f, 3.596f);
         public Vector2 maxSpawnPosition = new Vector2(1.69f, 0.8f);
         public int round;
@@ -15,6 +18,7 @@ namespace Root
         private Vector2 actualMax = new Vector2(6f, 8.75f);
         private List<Vector3> targetPositions = new List<Vector3>();
         public bool spawning;
+        public bool canUpdateScore = true;
 
         public void Update(){
             if(enemiesInScene.Count == 0){
@@ -70,6 +74,7 @@ namespace Root
 
         public void RemoveEnemy(GameObject enemy)
         {
+            if (this.canUpdateScore) { this.pointsText.text = "Score: " + ShooterScoreManager.Instance.Score.ToString(); }
             int index = this.enemiesInScene.IndexOf(enemy);
             this.targetPositions.RemoveAt(index);
             this.enemiesInScene.RemoveAt(index);

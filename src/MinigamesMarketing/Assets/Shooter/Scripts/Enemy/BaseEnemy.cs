@@ -20,34 +20,37 @@ namespace Root
         public string idleAnimationName;
         public bool canShoot = true;
 
-        public void Start()
+        public virtual void Start()
         {
             anim = GetComponent<Animator>();
             gm = GameObject.Find("GM");
-            timeSinceLastShot = UnityEngine.Random.Range(0.0f, fireRate);
+            timeSinceLastShot = Random.Range(0.0f, fireRate);
         }
 
 
-        public void Update()
+        public virtual void Update()
         {
             timeSinceLastShot += Time.deltaTime;
             if (timeSinceLastShot >= fireRate)
             {
-                Shoot(UnityEngine.Quaternion.identity);
+                Shoot(Quaternion.identity);
                 timeSinceLastShot = 0.0f;
             }
         }
-        public void Shoot(UnityEngine.Quaternion rotation)
+
+        public void Shoot(Quaternion rotation)
         {
             GameObject shot = Instantiate(enemyShot, transform.position, rotation);
             shot.GetComponent<Rigidbody2D>().AddForce(shot.transform.up * shotSpeed);
             StartCoroutine(DestroyShot(shot));
         }
+        
         IEnumerator DestroyShot(GameObject shot)
         {
             yield return new WaitForSeconds(3);
             Destroy(shot);
         }
+        
         public void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.tag == "PlayerShot")
@@ -56,7 +59,8 @@ namespace Root
                 StartCoroutine(TakeHit());
             }
         }
-        public IEnumerator TakeHit()
+
+        public virtual IEnumerator TakeHit()
         {
             health -= 1;
             canShoot = false;
@@ -68,9 +72,9 @@ namespace Root
 
             if (health <= 0)
             {
-                gm.GetComponent<EnemySpawnerScript>().RemoveEnemy(gameObject);
-                Instantiate(explosion, new UnityEngine.Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z), UnityEngine.Quaternion.identity);
                 ShooterScoreManager.Instance.IncrementScore();
+                gm.GetComponent<EnemySpawnerScript>().RemoveEnemy(gameObject);
+                Instantiate(explosion, new Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z), Quaternion.identity);
                 Destroy(gameObject);
             }
             else

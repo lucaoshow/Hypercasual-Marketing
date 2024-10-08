@@ -6,19 +6,20 @@ namespace Root
 {
     public class SMGEnemy : BaseEnemy
     {
-        public UnityEngine.Vector2 minSpawnPosition = new UnityEngine.Vector2(-1.718f, 3.38f);
-        public UnityEngine.Vector2 maxSpawnPosition = new UnityEngine.Vector2(1.69f, 3.38f);
+        public Vector2 minSpawnPosition = new Vector2(-1.718f, 3.38f);
+        public Vector2 maxSpawnPosition = new Vector2(1.69f, 3.38f);
         public bool goingRight = true;
         public bool isShooting = false;
 
         private EnemySpawnerScript enemySpawner;
 
-        new private void Start()
+        public override void Start()
         {
             base.Start();
             this.enemySpawner = gm.GetComponent<EnemySpawnerScript>();
         }
-        new public void Update()
+
+        public override void Update()
         {
             timeSinceLastShot += Time.deltaTime;
             if (timeSinceLastShot >= fireRate && !isShooting)
@@ -31,13 +32,13 @@ namespace Root
             {
                 if (goingRight)
                 {
-                    transform.position = new UnityEngine.Vector3(transform.position.x + 0.01f, transform.position.y, transform.position.z);
+                    transform.position = new Vector3(transform.position.x + 0.01f, transform.position.y, transform.position.z);
                     if (transform.position.x >= maxSpawnPosition.x)
                     {
                         goingRight = false;
                     }
                 }else{
-                    transform.position = new UnityEngine.Vector3(transform.position.x - 0.01f, transform.position.y, transform.position.z);
+                    transform.position = new Vector3(transform.position.x - 0.01f, transform.position.y, transform.position.z);
                     if (transform.position.x <= minSpawnPosition.x)
                     {
                         goingRight = true;
@@ -49,13 +50,13 @@ namespace Root
         {
             for (int i = 0; i < 3; i++)
             {
-                Shoot(UnityEngine.Quaternion.identity);
+                Shoot(Quaternion.identity);
                 yield return new WaitForSeconds(0.1f);
             }
             isShooting = false;
         }
 
-        new public IEnumerator TakeHit()
+        public override IEnumerator TakeHit()
         {
             health -= 1;
             canShoot = false;
@@ -68,18 +69,10 @@ namespace Root
             if (health <= 0)
             {
                 
+                ShooterScoreManager.Instance.IncrementScore(5);
                 this.enemySpawner.RemoveEnemy(gameObject);
-                GameObject explosionObj = Instantiate(explosion, new UnityEngine.Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z), UnityEngine.Quaternion.identity);
-                yield return new WaitForSeconds(0.1f);
-                Destroy(explosionObj);
-                for (int i = 0; i < 5; i++)
-                {
-                    ShooterScoreManager.Instance.IncrementScore();
-                }
+                Instantiate(explosion, new Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z), Quaternion.identity);
                 Destroy(gameObject);
-
-
-
             }
             else
             {

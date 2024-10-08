@@ -1,11 +1,13 @@
 using System.Collections;
+using Root.General.Utils.Scenes;
 using UnityEngine;
 
 namespace Root.Shooter.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-        private readonly float LERP_FACTOR = 0.01f;
+        [SerializeField] private EnemySpawnerScript gm;
+        private readonly float LERP_FACTOR = 0.05f;
         public float timeSinceLastShot;
         public float fireRate;
         public float shotSpeed;
@@ -39,23 +41,27 @@ namespace Root.Shooter.Player
                 this.origin = Camera.main.ScreenToWorldPoint( Input.GetTouch(0).position );
                 this.target = this.transform.position;
             }
+
             if(fireRate < timeSinceLastShot && Input.touchCount > 0)
             {
-                timeSinceLastShot = 0;
+                timeSinceLastShot = 0f;
                 Shoot();
             }
         }
+
         public void Shoot()
         {
             GameObject shot = Instantiate(shotPrefab, transform.position, Quaternion.identity);
             shot.GetComponent<Rigidbody2D>().AddForce(shot.transform.up * shotSpeed);
             StartCoroutine(DestroyShot(shot));
         }
+        
         IEnumerator DestroyShot(GameObject shot)
         {
             yield return new WaitForSeconds(2);
             Destroy(shot);
         }
+
         void OnCollisionEnter2D(Collision2D collision)
         {
             if(collision.gameObject.tag == "EnemyProjectile")
@@ -72,8 +78,10 @@ namespace Root.Shooter.Player
                         break;
                     case 0:
                         healthBar.GetComponent<Animator>().CrossFade("0hp", 0);
-                        GameObject explodeObj = Instantiate(explosion, transform.position, Quaternion.identity);
+                        Instantiate(explosion, transform.position, Quaternion.identity);
                         Destroy(gameObject);
+                        SceneHelper.LoadScene("RetryScene", true);
+                        this.gm.canUpdateScore = false;
                         break;
                 }
                 

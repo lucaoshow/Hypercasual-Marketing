@@ -11,6 +11,12 @@ namespace Root.General.Score
             if (this.Score >= this.HighestScore) { this.HighestScore = this.Score; }
         }
 
+        public void IncrementScore(int increment)
+        {
+            this.Score += increment;
+            if (this.Score >= this.HighestScore) { this.HighestScore = this.Score; }
+        }
+
         public void ResetScore()
         {
             this.Score = 0;
