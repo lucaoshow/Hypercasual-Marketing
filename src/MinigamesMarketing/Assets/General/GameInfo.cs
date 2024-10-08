@@ -6,5 +6,6 @@ namespace Root.General
     public class GameInfo : ScriptableObject 
     {
         public int gameId;
+        public int playerId;
     }
 }

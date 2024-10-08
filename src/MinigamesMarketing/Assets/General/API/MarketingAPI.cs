@@ -7,29 +7,23 @@ namespace Root.General.API
 {
     public class MarketingAPI : MonoBehaviour
     {
+        [SerializeField] private GameInfo gameInfo;
         private readonly string API_URL = "http://localhost:5000";
-        private static MarketingAPI instance;
-        public static MarketingAPI Instance 
-        { 
-            get
-            {
-                if (instance == null)
-                {
-                    instance = (new GameObject("MarketingAPIContainer")).AddComponent<MarketingAPI>();
-                }
-                return instance;
-            }
-        }
 
         public void GetLeaderboard(LeaderboardData resultContainer)
         {
-            StartCoroutine(this.Get<LeaderboardData>(API_URL + "/scores", resultContainer, "lines"));
+            StartCoroutine(this.Get<LeaderboardData>(API_URL + "/scores?game_id=" + this.gameInfo.gameId.ToString(), resultContainer, "lines"));
         }
 
         public void SendPlayerFormData(string name, string email, string interest, int year, bool authorization)
         {
             string auth = authorization ? "true" : "false";
             this.StartCoroutine(this.Post(API_URL + "/players", $"{{\"name\": \"{name}\",\"email\": \"{email}\",\"interest_area\": \"{interest}\", \"graduation_year\": {year}, \"email_authorization\": {auth}}}"));
+        }
+
+        public void SendPlayerScore(int score)
+        {
+            this.StartCoroutine(this.Post(API_URL + "/scores", $"{{\"player_id\": \"{this.gameInfo.playerId}\",\"game_id\": \"{this.gameInfo.gameId}\",\"value\": \"{score}\"}}"));
         }
 
         private IEnumerator Get<T>(string url, T resultContainer, string jsonArrayKey) where T : IGetResultContainer<T>
@@ -67,7 +61,8 @@ namespace Root.General.API
                 }
                 else
                 {
-                    Debug.Log("Upload succeeded!");
+                    Debug.Log(webRequest.downloadHandler.text);
+                    //this.gameInfo.playerId = webRequest.downloadHandler.text["data"]
                 }
             }
         }

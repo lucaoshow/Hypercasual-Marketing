@@ -1,5 +1,7 @@
 using System.Collections;
+using Root.General.API;
 using Root.General.Utils.Scenes;
+using Root.Shooter.Score;
 using UnityEngine;
 
 namespace Root.Shooter.Player
@@ -7,7 +9,8 @@ namespace Root.Shooter.Player
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private EnemySpawnerScript gm;
-        private readonly float LERP_FACTOR = 0.05f;
+        [SerializeField] private MarketingAPI marketingApi;
+        private readonly float LERP_FACTOR = 0.04f;
         public float timeSinceLastShot;
         public float fireRate;
         public float shotSpeed;
@@ -80,6 +83,10 @@ namespace Root.Shooter.Player
                         healthBar.GetComponent<Animator>().CrossFade("0hp", 0);
                         Instantiate(explosion, transform.position, Quaternion.identity);
                         Destroy(gameObject);
+                        if (ShooterScoreManager.Instance.ShouldSendScore)
+                        {
+                            this.marketingApi.SendPlayerScore(ShooterScoreManager.Instance.Score);
+                        }
                         SceneHelper.LoadScene("RetryScene", true);
                         this.gm.canUpdateScore = false;
                         break;

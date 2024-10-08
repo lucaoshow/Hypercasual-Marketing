@@ -18,6 +18,15 @@ namespace Root.General.Retry
 
         public void OnRetryButtonPressed() 
         {
+            if (this.gameInfo.gameId == 2)
+            {
+                FroggerScoreManager.Instance.ResetScore();
+            }
+            else
+            {
+                ShooterScoreManager.Instance.ResetScore();
+            }
+            
             SceneHelper.UnloadScene("RetryScene");
             SceneHelper.LoadScene(this.gameInfo.gameId);
         }

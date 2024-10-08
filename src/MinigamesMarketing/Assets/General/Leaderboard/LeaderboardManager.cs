@@ -6,6 +6,7 @@ namespace Root.General.Leaderboard
 {
     public class LeaderboardManager : MonoBehaviour
     {
+        [SerializeField] private MarketingAPI marketingApi;
         [SerializeField] private Transform parent;
         [SerializeField] private Text textPrefab;
         [SerializeField] private int rowOffset;
@@ -15,7 +16,7 @@ namespace Root.General.Leaderboard
 
         void Awake()
         {
-            MarketingAPI.Instance.GetLeaderboard(this.leaderboard);
+            this.marketingApi.GetLeaderboard(this.leaderboard);
         }
 
         void Update()
@@ -36,18 +37,24 @@ namespace Root.General.Leaderboard
             for (int i = 0; i < this.leaderboard.Count(); i++)
             {
                 LeaderboardLine current = this.leaderboard.lines[i];
-                Text number = Instantiate(textPrefab, pos * i, Quaternion.identity, this.parent);
+                Text number = Instantiate(textPrefab);
+                number.transform.parent = this.parent;
+                number.transform.localPosition = pos * i;
                 Vector3 cumulativeOffset = new Vector3(number.GetComponent<RectTransform>().rect.width / 2, 0 , 0);
                 number.text = i.ToString() + ".";
 
-                Text name = Instantiate(textPrefab, pos * i + nameOffset + cumulativeOffset, Quaternion.identity, this.parent);
+                Text name = Instantiate(textPrefab);
+                name.transform.parent = this.parent;
+                name.transform.localPosition = pos * i + nameOffset + cumulativeOffset;
                 Rect nameRect = name.GetComponent<RectTransform>().rect;
                 nameRect.Set(nameRect.x, nameRect.y, 800, nameRect.height);
                 cumulativeOffset.x += nameRect.width / 2;
                 name.fontSize = 54;
                 name.text = current.player;
 
-                Text points = Instantiate(textPrefab, pos * i + pointsOffset + cumulativeOffset, Quaternion.identity, this.parent);
+                Text points = Instantiate(textPrefab);
+                points.transform.parent = this.parent;
+                points.transform.localPosition = pos * i + pointsOffset + cumulativeOffset;
                 Rect pointsRect = number.GetComponent<RectTransform>().rect;
                 pointsRect.Set(pointsRect.x, pointsRect.y, 500, pointsRect.height);
                 points.text = current.score.ToString();

@@ -5,25 +5,19 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 using Root.General.API;
+using Root.General.Utils.Scenes;
 
 namespace Root.General.Forms
 {
     public class FormsManager : MonoBehaviour
     {
-        [SerializeField]
-        private InputField nameInput;
-        [SerializeField]
-        private InputField emailInput;
-        [SerializeField]
-        private InputField interestInput;
-        [SerializeField]
-        private InputField yearInput;
-        [SerializeField]
-        private Button authorizationButton; 
-        [SerializeField]
-        private Button sendButton;
-        [SerializeField]
-        private Text errorTextPrefab;
+        [SerializeField] private MarketingAPI marketingApi;
+        [SerializeField] private InputField nameInput;
+        [SerializeField] private InputField emailInput;
+        [SerializeField] private InputField interestInput;
+        [SerializeField] private InputField yearInput;
+        [SerializeField] private GameObject authorizationImage; 
+        [SerializeField] private Text errorTextPrefab;
 
         private readonly int CURRENT_YEAR = DateTime.Now.Year;
 
@@ -48,11 +42,11 @@ namespace Root.General.Forms
             }
             else if (input == this.emailInput && !Regex.IsMatch(input.text, "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$"))
             {
-                this.errors[input] = this.CreateError(input.transform, "*Email inv�lido");
+                this.errors[input] = this.CreateError(input.transform, "*Email inválido");
             }
             else if (input == this.yearInput && (input.text.Length != 4 || Int32.Parse(input.text) < this.CURRENT_YEAR))
             {
-                this.errors[input] = this.CreateError(input.transform, "*Ano inv�lido");
+                this.errors[input] = this.CreateError(input.transform, "*Ano inválido");
             }
         }
 
@@ -68,6 +62,7 @@ namespace Root.General.Forms
         public void OnAuthorizationButtonClicked()
         {
             this.authorized = !this.authorized;
+            this.authorizationImage.SetActive(this.authorized);
         }
 
         public void OnSendButtonClicked()
@@ -77,7 +72,8 @@ namespace Root.General.Forms
                 return;
             }
 
-            MarketingAPI.Instance.SendPlayerFormData(nameInput.text, emailInput.text, interestInput.text, Int32.Parse(yearInput.text), authorized);
+            this.marketingApi.SendPlayerFormData(nameInput.text, emailInput.text, interestInput.text, Int32.Parse(yearInput.text), authorized);
+            SceneHelper.LoadScene("StartScene");
         }
 
         private Text CreateError(Transform parent, string message)
