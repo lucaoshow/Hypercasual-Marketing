@@ -1158,7 +1158,7 @@ MonoBehaviour:
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 4
-  m_CharacterLimit: 0
+  m_CharacterLimit: 15
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -1751,6 +1751,7 @@ MonoBehaviour:
   yearInput: {fileID: 386684132}
   authorizationImage: {fileID: 1381013944}
   errorTextPrefab: {fileID: 6997450358772227638, guid: a2e86f21d706d7345a3db5378952bdad, type: 3}
+  gameInfo: {fileID: 0}
 --- !u!1 &1082898141
 GameObject:
   m_ObjectHideFlags: 0

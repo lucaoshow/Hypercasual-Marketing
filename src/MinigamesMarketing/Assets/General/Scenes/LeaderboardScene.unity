@@ -391,11 +391,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c37a87243a0558e4593830b805b36e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  marketingApi: {fileID: 372388379}
+  gameInfo: {fileID: 11400000, guid: e85a2551d8e535a429e4188091d432d8, type: 2}
   parent: {fileID: 1774365175}
   textPrefab: {fileID: 2814979266626195300, guid: b63e30aabb3c25a4fbe27b2b9fb4691e, type: 3}
   rowOffset: 150
-  nameWidth: 700
+  nameWidth: 200
 --- !u!4 &1076861850
 Transform:
   m_ObjectHideFlags: 0

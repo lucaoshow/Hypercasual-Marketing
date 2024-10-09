@@ -18,6 +18,7 @@ namespace Root.General.Forms
         [SerializeField] private InputField yearInput;
         [SerializeField] private GameObject authorizationImage; 
         [SerializeField] private Text errorTextPrefab;
+        [SerializeField] private GameInfo gameInfo;
 
         private readonly int CURRENT_YEAR = DateTime.Now.Year;
 
@@ -72,6 +73,7 @@ namespace Root.General.Forms
                 return;
             }
 
+            this.gameInfo.playerName = nameInput.text;
             this.marketingApi.SendPlayerFormData(nameInput.text, emailInput.text, interestInput.text, Int32.Parse(yearInput.text), authorized);
             SceneHelper.LoadScene("StartScene");
         }

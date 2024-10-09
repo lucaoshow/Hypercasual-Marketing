@@ -19,18 +19,19 @@ def home():
 
 @app.route('/games')
 def games():
-    response = supabase.table('game').select("*").execute()
+    response = supabase.table('games').select("*").execute()
     return response.data
 
 @app.route('/scores')
 def scores():
+    game_id = request.args.get("game_id")
     today = datetime.now().strftime('%Y-%m-%d')
-    response = supabase.from_('score').select('player_id, value').gte('date', today + ' 00:00:00').lte('date', today + ' 23:59:59').order('value', desc=True).execute()
+    response = supabase.from_('scores').select('player_id, score').gte('date', today + ' 00:00:00').lte('date', today + ' 23:59:59').eq("game_id", game_id).order('score', desc=True).execute()
 
     leaderboard = []
     for score in response.data:
-        player = supabase.from_('player').select('name').eq('id', score['player_id']).execute()
-        leaderboard.append({'player': player.data[0]['name'], 'score': score['value']})
+        player = supabase.from_('players').select('name').eq('id', score['player_id']).execute()
+        leaderboard.append({'player': player.data[0]['name'], 'score': score['score']})
 
     return leaderboard
 
@@ -39,11 +40,11 @@ def score():
     try:
         data = request.get_json()
 
-        if not data or 'game_id' not in data or 'player_id' not in data or 'value' not in data:
+        if not data or 'game_id' not in data or 'player_id' not in data or 'score' not in data:
             return jsonify({"error": "Dados inválidos"}), 400
 
         response = (
-            supabase.table("score")
+            supabase.table("scores")
             .insert(data)
             .execute()
         )
@@ -51,11 +52,11 @@ def score():
         return jsonify({"message": "Pontuação inserida com sucesso", "data": response.data}), 200
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": e.__str__()}), 500
 
 @app.route('/players')
 def players():
-    response = supabase.table('player').select("*").order('name').execute()
+    response = supabase.table('players').select("*").order('name').execute()
     return response.data
 
 @app.route('/players', methods=['POST'])
@@ -77,7 +78,7 @@ def players_insert():
             return jsonify({"error": "Ano de graduação inválido"}), 400
 
         response = (
-            supabase.table("player")
+            supabase.table("players")
             .insert(data)
             .execute()
         )
@@ -85,7 +86,7 @@ def players_insert():
         return jsonify({ "message": "Dados do jogador inseridos com sucesso", "data": response.data}), 200
     
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": e.__str__()}), 500
     
 if __name__ == "__main__":
     app.run('localhost', 5000)

@@ -7,5 +7,6 @@ namespace Root.General
     {
         public int gameId;
         public int playerId;
+        public string playerName;
     }
 }

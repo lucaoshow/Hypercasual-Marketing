@@ -9,7 +9,7 @@ namespace Root.Shooter.Player
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private EnemySpawnerScript gm;
-        [SerializeField] private MarketingAPI marketingApi;
+        private MarketingAPI marketingApi;
         private readonly float LERP_FACTOR = 0.04f;
         public float timeSinceLastShot;
         public float fireRate;
@@ -23,6 +23,10 @@ namespace Root.Shooter.Player
         public GameObject hitSound;
         public int health = 3;
         
+        private void Start()
+        {
+            this.marketingApi = GameObject.FindObjectOfType<MarketingAPI>();
+        }
 
         void Update()
         {

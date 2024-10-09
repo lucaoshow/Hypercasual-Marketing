@@ -26,6 +26,12 @@ namespace Root.General.Leaderboard
     [Serializable]
     public struct LeaderboardLine 
     {
+        public LeaderboardLine(string playerName, int points)
+        {
+            player = playerName;
+            score = points;
+        }
+        
         public string player;
         public int score;
     }
