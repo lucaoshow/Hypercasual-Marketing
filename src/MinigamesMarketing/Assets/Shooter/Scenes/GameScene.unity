@@ -192,7 +192,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gm: {fileID: 1613480936}
-  marketingApi: {fileID: 174062710}
   timeSinceLastShot: 0
   fireRate: 0.5
   shotSpeed: 200
@@ -708,8 +707,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 21.7699, y: 983}
-  m_SizeDelta: {x: 1036.4363, y: 86.6643}
+  m_AnchoredPosition: {x: 22, y: 983}
+  m_SizeDelta: {x: 1035, y: 86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1248500187
 MonoBehaviour:
@@ -732,7 +731,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: e69ff9bde49d31e42b80ecccc81d1754, type: 3}
     m_FontSize: 72
     m_FontStyle: 0
     m_BestFit: 0
